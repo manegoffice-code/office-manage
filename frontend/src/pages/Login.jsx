@@ -4,7 +4,7 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+
 
 /* ─── Design tokens ─────────────────────────────────────────── */
 const C = {
@@ -120,6 +120,55 @@ export default function Login() {
     setTimeout(() => setMounted(true), 60);
   }, []);
 
+const handleLogin = async () => {
+  setError("");
+
+  // Validation
+  if (!username.trim() || !password.trim()) {
+    setError("Please enter both username and password.");
+    return;
+  }
+
+  setLoading(true);
+
+  // Direct Hardcoded Login
+  if (
+    username.trim() === "admin" &&
+    password.trim() === "admin@123"
+  ) {
+    const user = {
+      username: "admin",
+      role: "main_admin",
+    };
+
+    localStorage.setItem("admin_user", JSON.stringify(user));
+
+    setTimeout(() => {
+      navigate("/admin");
+    }, 1000);
+
+  } else if (
+    username.trim() === "staff" &&
+    password.trim() === "staff123"
+  ) {
+    const user = {
+      username: "staff",
+      role: "staff_admin",
+    };
+
+    localStorage.setItem("admin_user", JSON.stringify(user));
+
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 1000);
+
+  } else {
+    setError("Login failed. Check your credentials.");
+  }
+
+  setLoading(false);
+};
+  
   const handleLogin = async () => {
     setError("");
     if (!username.trim() || !password.trim()) {
