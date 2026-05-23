@@ -131,7 +131,7 @@ const handleLogin = () => {
   // Main Admin Login
   if (
     username.trim() === "admin" &&
-    password.trim() === "admin123"
+    password.trim() === "admin@123"
   ) {
 
     localStorage.setItem(
@@ -149,7 +149,7 @@ const handleLogin = () => {
   // Staff Admin Login
   if (
     username.trim() === "staff" &&
-    password.trim() === "staff123"
+    password.trim() === "staff@123"
   ) {
 
     localStorage.setItem(
