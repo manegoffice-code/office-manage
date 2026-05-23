@@ -77,8 +77,8 @@ CREATE TABLE IF NOT EXISTS complaint_entries (
 );
 
 -- Seed default admin accounts (plain text passwords for simplicity)
--- main_admin: username=admin, password=admin123
--- staff_admin: username=staff, password=staff123
+-- main_admin: username=admin, password=admin@123
+-- staff_admin: username=staff, password=staff@123
 INSERT IGNORE INTO admin_users (username, password, role) VALUES
   ('admin', 'admin@123', 'main_admin'),
   ('staff', 'staff@123', 'staff_admin');
