@@ -8,7 +8,7 @@ const pool = mysql.createPool({
   port:               3306,
   database:           "mla_office",   // must match your MySQL database name
   user:               "root",          // your MySQL username
-  password:           "Root",  // ← CHANGE THIS to your MySQL root password
+  password:           "BlPMYhGFoIAlIjDHZqounlVuZiGLWZBJ",  // ← CHANGE THIS to your MySQL root password
   waitForConnections: true,
   connectionLimit:    10,
 });
