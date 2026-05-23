@@ -124,7 +124,7 @@ export default function Login() {
 
   if (
     username.trim() === "admin" &&
-    password.trim() === "admin@123"
+    password.trim() === "admin123"
   ) {
 
     localStorage.setItem(
