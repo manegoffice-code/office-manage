@@ -117,11 +117,18 @@ export default function Login() {
   const chosenRole = ROLES.find(r => r.key === selectedRole);
 
   useEffect(() => {
-    setTimeout(() => setMounted(true), 60);
-  }, []);
-  const handleLogin = () => {
+  setTimeout(() => setMounted(true), 60);
+}, []);
+
+// 👇 YA KHAlI PASTE KARA
+const handleLogin = () => {
   setError("");
 
+  console.log("Role:", selectedRole);
+  console.log("Username:", username);
+  console.log("Password:", password);
+
+  // Main Admin Login
   if (
     username.trim() === "admin" &&
     password.trim() === "admin123"
@@ -135,10 +142,11 @@ export default function Login() {
       })
     );
 
-    navigate("/admin");
+    window.location.href = "/admin";
     return;
   }
 
+  // Staff Admin Login
   if (
     username.trim() === "staff" &&
     password.trim() === "staff123"
@@ -152,54 +160,7 @@ export default function Login() {
       })
     );
 
-    navigate("/dashboard");
-    return;
-  }
-
-  setError("Login failed. Check your credentials.");
-};
-useEffect(() => {
-  setTimeout(() => setMounted(true), 60);
-}, []);
-
-const handleLogin = () => {
-  setError("");
-
-  // Main Admin
-  if (
-    selectedRole === "main_admin" &&
-    username.trim() === "admin" &&
-    password.trim() === "admin@123"
-  ) {
-
-    localStorage.setItem(
-      "admin_user",
-      JSON.stringify({
-        username: "admin",
-        role: "main_admin",
-      })
-    );
-
-    navigate("/admin");
-    return;
-  }
-
-  // Staff Admin
-  if (
-    selectedRole === "staff_admin" &&
-    username.trim() === "staff" &&
-    password.trim() === "staff123"
-  ) {
-
-    localStorage.setItem(
-      "admin_user",
-      JSON.stringify({
-        username: "staff",
-        role: "staff_admin",
-      })
-    );
-
-    navigate("/dashboard");
+    window.location.href = "/dashboard";
     return;
   }
 
