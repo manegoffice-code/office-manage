@@ -119,13 +119,12 @@ export default function Login() {
   useEffect(() => {
     setTimeout(() => setMounted(true), 60);
   }, []);
-const handleLogin = () => {
+  const handleLogin = () => {
   setError("");
 
-  // Main Admin Login
   if (
-    username === "admin" &&
-    password === "admin@123"
+    username.trim() === "admin" &&
+    password.trim() === "admin@123"
   ) {
 
     localStorage.setItem(
@@ -136,14 +135,13 @@ const handleLogin = () => {
       })
     );
 
-    window.location.href = "/admin";
+    navigate("/admin");
     return;
   }
 
-  // Staff Login
   if (
-    username === "staff" &&
-    password === "staff123"
+    username.trim() === "staff" &&
+    password.trim() === "staff123"
   ) {
 
     localStorage.setItem(
@@ -154,78 +152,18 @@ const handleLogin = () => {
       })
     );
 
-    window.location.href = "/dashboard";
+    navigate("/dashboard");
     return;
   }
 
   setError("Login failed. Check your credentials.");
 };
-
-  
-const handleLogin = async () => {
-  setError("");
-
-  // Validation
-  if (!username.trim() || !password.trim()) {
-    setError("Please enter both username and password.");
-    return;
-  }
-
-  setLoading(true);
-
-  // Direct Hardcoded Login
-  if (
-    username.trim() === "admin" &&
-    password.trim() === "admin@123"
-  ) {
-    const user = {
-      username: "admin",
-      role: "main_admin",
-    };
-
-    localStorage.setItem("admin_user", JSON.stringify(user));
-
-    setTimeout(() => {
-      navigate("/admin");
-    }, 1000);
-
-  } else if (
-    username.trim() === "staff" &&
-    password.trim() === "staff123"
-  ) {
-    const user = {
-      username: "staff",
-      role: "staff_admin",
-    };
-
-    localStorage.setItem("admin_user", JSON.stringify(user));
-
-    setTimeout(() => {
-      navigate("/dashboard");
-    }, 1000);
-
-  } else {
-    setError("Login failed. Check your credentials.");
-  }
-
-  setLoading(false);
-};
-  
-  const handleLogin = async () => {
-    setError("");
-    if (!username.trim() || !password.trim()) {
-      setError("Please enter both username and password.");
-      return;
-    }
-    setLoading(true);
     try {
       const res = await axios.post("/api/admin-login", {
   username: username.trim(),
   password: password.trim(),
 });
-
-
-      export default function handler(req, res) {
+{
   if (req.method !== "POST") {
     return res.status(405).json({
       success: false,
