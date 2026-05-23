@@ -80,5 +80,5 @@ CREATE TABLE IF NOT EXISTS complaint_entries (
 -- main_admin: username=admin, password=admin123
 -- staff_admin: username=staff, password=staff123
 INSERT IGNORE INTO admin_users (username, password, role) VALUES
-  ('admin', 'admin123', 'main_admin'),
-  ('staff', 'staff123', 'staff_admin');
+  ('admin', 'admin@123', 'main_admin'),
+  ('staff', 'staff@123', 'staff_admin');
