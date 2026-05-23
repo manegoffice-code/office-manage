@@ -128,12 +128,10 @@ export default function Login() {
     }
     setLoading(true);
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/admin-login`,
-  {
-    username: username.trim(),
-    password: password.trim(),
-  }
-);
+      const res = await axios.post("/api/admin-login", {
+  username: username.trim(),
+  password: password.trim(),
+});
 
 
       export default function handler(req, res) {
