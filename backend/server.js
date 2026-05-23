@@ -1,8 +1,4 @@
-// ================================================================
-// LETTER TRACKING SYSTEM - Backend Server
-// File: backend/letter_server.js
-// Add these routes to your existing server.js OR run as standalone
-// ================================================================
+// backend/server.js
 
 const express = require("express");
 const cors    = require("cors");
@@ -10,8 +6,8 @@ const multer  = require("multer");
 const path    = require("path");
 const fs      = require("fs");
 
-// ── File upload setup ────────────────────────────────────────────
-const uploadDir = path.join(__dirname, "uploads/letters");
+// ── File upload setup (multer) ───────────────────────────────
+const uploadDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
 
 const storage = multer.diskStorage({
@@ -21,31 +17,69 @@ const storage = multer.diskStorage({
     cb(null, safe);
   },
 });
-const upload = multer({
-  storage,
-  limits: { fileSize: 20 * 1024 * 1024 }, // 20 MB
-  fileFilter: (req, file, cb) => {
-    const allowed = /pdf|png|jpg|jpeg|gif|webp/;
-    if (allowed.test(path.extname(file.originalname).toLowerCase())) cb(null, true);
-    else cb(new Error("Only PDF and images are allowed"));
-  },
+const upload = multer({ storage, limits: { fileSize: 50 * 1024 * 1024 } }); // 50 MB limit
+
+const { register, login, adminLogin }           = require("./server/users");
+const {
+  addComplaint,
+  getComplaints,
+  getPublicComplaints,
+  updateStatus,
+  deleteComplaint,
+  addEntry,
+  getEntries,
+}                                               = require("./server/complaints");
+const { addAppointment, getAppointments, updateAppointmentStatus } = require("./server/appointments");
+const { getNotices, addNotice, deleteNotice }   = require("./server/notices");
+const { verifyToken }                           = require("./server/auth");
+const { allowRoles }                            = require("./server/roles");
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// ── AUTH ─────────────────────────────────────────────────────
+app.post("/api/register",    register);
+app.post("/api/login",       login);
+app.post("/api/admin-login", adminLogin);
+
+// ── COMPLAINTS ───────────────────────────────────────────────
+app.post("/api/complaints",             upload.array("files", 10), addComplaint);
+app.get("/api/complaints/public",       getPublicComplaints);
+app.get("/api/complaints",              getComplaints);
+app.patch("/api/complaints/:id/status", updateStatus);
+app.delete("/api/complaints/:id",       deleteComplaint);
+app.post("/api/complaints/:id/entries", addEntry);
+app.get("/api/complaints/:id/entries",  getEntries);
+
+// ── APPOINTMENTS ─────────────────────────────────────────────
+app.post("/api/appointments",              upload.array("files", 10), addAppointment);
+app.get("/api/appointments",               getAppointments);
+app.patch("/api/appointments/:id/status",  updateAppointmentStatus);
+
+// ── NOTICES ──────────────────────────────────────────────────
+app.get("/api/notices",            getNotices);
+app.post("/api/notices",           upload.array("files", 4), addNotice);
+app.delete("/api/notices/:id",     deleteNotice);
+
+// ── STATS ────────────────────────────────────────────────────
+app.get("/api/stats", async (req, res) => {
+  const pool = require("./server/db");
+  try {
+    const [[{complaints}]]   = await pool.query("SELECT COUNT(*) AS complaints FROM complaints");
+    const [[{appointments}]] = await pool.query("SELECT COUNT(*) AS appointments FROM appointments");
+    const [[{resolved}]]     = await pool.query("SELECT COUNT(*) AS resolved FROM complaints WHERE status IN ('Approved', 'Done')");
+    const [[{areas}]]        = await pool.query("SELECT COUNT(DISTINCT area) AS areas FROM complaints");
+    res.json({ complaints, appointments, resolved, areas });
+  } catch (err) {
+    console.error("❌ Stats error:", err.message);
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
-const letterRoutes = require("./server/letters");
-const deskRoutes   = require("./server/desks");
-
-// ── If running standalone ───────────────────────────────────────
-if (require.main === module) {
-  const app = express();
-  app.use(cors());
-  app.use(express.json());
-  app.use("/uploads/letters", express.static(uploadDir));
-
-  app.use("/api/letters", (req, res, next) => { req.upload = upload; next(); }, letterRoutes);
-  app.use("/api/desks",   deskRoutes);
-
-  app.listen(5001, () => console.log("✅ Letter server running on http://localhost:5001"));
-}
-
-// ── Export for integration into existing server.js ──────────────
-module.exports = { letterRoutes, deskRoutes, upload, uploadDir };
+// ── START ────────────────────────────────────────────────────
+app.listen(5000, () => {
+  console.log("✅ Server running on http://localhost:5000");
+});
