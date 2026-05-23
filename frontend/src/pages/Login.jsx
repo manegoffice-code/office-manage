@@ -158,69 +158,53 @@ export default function Login() {
 
   setError("Login failed. Check your credentials.");
 };
-    try {
-      const res = await axios.post("/api/admin-login", {
-  username: username.trim(),
-  password: password.trim(),
-});
-{
-  if (req.method !== "POST") {
-    return res.status(405).json({
-      success: false,
-      error: "Method not allowed",
-    });
-  }
+useEffect(() => {
+  setTimeout(() => setMounted(true), 60);
+}, []);
 
-  const { username, password } = req.body;
+const handleLogin = () => {
+  setError("");
 
   // Main Admin
-  if (username === "admin" && password === "admin@123") {
-    return res.status(200).json({
-      success: true,
-      user: {
+  if (
+    selectedRole === "main_admin" &&
+    username.trim() === "admin" &&
+    password.trim() === "admin@123"
+  ) {
+
+    localStorage.setItem(
+      "admin_user",
+      JSON.stringify({
         username: "admin",
         role: "main_admin",
-      },
-    });
+      })
+    );
+
+    navigate("/admin");
+    return;
   }
 
   // Staff Admin
-  if (username === "staff" && password === "staff123") {
-    return res.status(200).json({
-      success: true,
-      user: {
+  if (
+    selectedRole === "staff_admin" &&
+    username.trim() === "staff" &&
+    password.trim() === "staff123"
+  ) {
+
+    localStorage.setItem(
+      "admin_user",
+      JSON.stringify({
         username: "staff",
         role: "staff_admin",
-      },
-    });
+      })
+    );
+
+    navigate("/dashboard");
+    return;
   }
 
-  return res.status(401).json({
-    success: false,
-    error: "Invalid credentials",
-  });
-}
-      if (res.data.success) {
-        const user = res.data.user;
-        if (user.role !== selectedRole) {
-          setError(
-            `These credentials belong to a ${user.role === "main_admin" ? "Main Admin" : "Staff Admin"} account. Please select the correct login type.`
-          );
-          setLoading(false);
-          return;
-        }
-        localStorage.setItem("admin_user", JSON.stringify(user));
-        if (user.role === "main_admin") navigate("/admin");
-        else navigate("/dashboard");
-      }
-    } catch (err) {
-      const msg = err?.response?.data?.error || "Login failed. Check your credentials.";
-      setError(msg);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  setError("Login failed. Check your credentials.");
+};
   return (
     <div style={{
       minHeight: "100vh",
