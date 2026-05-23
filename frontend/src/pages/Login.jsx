@@ -128,13 +128,51 @@ export default function Login() {
     }
     setLoading(true);
     try {
-      const res = await axios.post(
-  `${import.meta.env.VITE_API_URL}/api/admin-login`,
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/admin-login`,
   {
     username: username.trim(),
     password: password.trim(),
   }
 );
+
+
+      export default function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({
+      success: false,
+      error: "Method not allowed",
+    });
+  }
+
+  const { username, password } = req.body;
+
+  // Main Admin
+  if (username === "admin" && password === "admin@123") {
+    return res.status(200).json({
+      success: true,
+      user: {
+        username: "admin",
+        role: "main_admin",
+      },
+    });
+  }
+
+  // Staff Admin
+  if (username === "staff" && password === "staff123") {
+    return res.status(200).json({
+      success: true,
+      user: {
+        username: "staff",
+        role: "staff_admin",
+      },
+    });
+  }
+
+  return res.status(401).json({
+    success: false,
+    error: "Invalid credentials",
+  });
+}
       if (res.data.success) {
         const user = res.data.user;
         if (user.role !== selectedRole) {
