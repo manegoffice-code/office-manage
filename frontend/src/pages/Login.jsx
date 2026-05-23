@@ -119,7 +119,49 @@ export default function Login() {
   useEffect(() => {
     setTimeout(() => setMounted(true), 60);
   }, []);
+const handleLogin = () => {
+  setError("");
 
+  // Main Admin Login
+  if (
+    username === "admin" &&
+    password === "admin@123"
+  ) {
+
+    localStorage.setItem(
+      "admin_user",
+      JSON.stringify({
+        username: "admin",
+        role: "main_admin",
+      })
+    );
+
+    window.location.href = "/admin";
+    return;
+  }
+
+  // Staff Login
+  if (
+    username === "staff" &&
+    password === "staff123"
+  ) {
+
+    localStorage.setItem(
+      "admin_user",
+      JSON.stringify({
+        username: "staff",
+        role: "staff_admin",
+      })
+    );
+
+    window.location.href = "/dashboard";
+    return;
+  }
+
+  setError("Login failed. Check your credentials.");
+};
+
+  
 const handleLogin = async () => {
   setError("");
 
