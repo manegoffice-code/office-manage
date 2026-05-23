@@ -142,7 +142,7 @@ const handleLogin = () => {
       })
     );
 
-    window.location.href = "/admin";
+    navigate("/admin");
     return;
   }
 
@@ -160,7 +160,7 @@ const handleLogin = () => {
       })
     );
 
-    window.location.href = "/dashboard";
+   navigate("/dashboard");
     return;
   }
 
