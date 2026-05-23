@@ -128,7 +128,7 @@ export default function Login() {
     }
     setLoading(true);
     try {
-      const res = await axios.post("http://udaysangle.vercel.app/api/admin-login", {
+      const res = await axios.post("https://udaysangle.vercel.app/api/admin-login", {
         username: username.trim(),
         password: password.trim(),
       });
