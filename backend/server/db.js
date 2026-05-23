@@ -4,7 +4,7 @@
 const mysql = require("mysql2/promise");
 
 const pool = mysql.createPool({
-  host:               "localhost",
+  host:               "mysql.railway.internal",
   port:               3306,
   database:           "mla_office",   // must match your MySQL database name
   user:               "root",          // your MySQL username
