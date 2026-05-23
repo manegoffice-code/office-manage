@@ -128,10 +128,13 @@ export default function Login() {
     }
     setLoading(true);
     try {
-      const res = await axios.post("https://udaysangle.vercel.app/api/admin-login", {
-        username: username.trim(),
-        password: password.trim(),
-      });
+      const res = await axios.post(
+  `${import.meta.env.VITE_API_URL}/api/admin-login`,
+  {
+    username: username.trim(),
+    password: password.trim(),
+  }
+);
       if (res.data.success) {
         const user = res.data.user;
         if (user.role !== selectedRole) {
