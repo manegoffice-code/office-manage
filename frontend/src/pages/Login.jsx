@@ -138,7 +138,7 @@ const handleLogin = () => {
       "admin_user",
       JSON.stringify({
         username: "admin",
-        role: "main_admin",
+        
       })
     );
 
