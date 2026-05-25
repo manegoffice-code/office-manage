@@ -542,6 +542,13 @@ const handleLogin = () => {
                 background: "rgba(13,27,62,0.03)",
                 border: "1px dashed rgba(200,148,42,0.25)",
               }}>
+                <div style={{ fontSize: 11, fontWeight: 600, color: C.textPrimary, marginBottom: 6, letterSpacing: 0.5 }}>
+                  Default Credentials
+                </div>
+                <div style={{ fontSize: 12, color: C.mutedDark, lineHeight: 1.9 }}>
+                  Main Admin: <code style={{ background: "rgba(255,107,0,0.08)", padding: "1px 6px", borderRadius: 4, color: C.saffron, fontFamily: "monospace" }}>admin</code> / <code style={{ background: "rgba(255,107,0,0.08)", padding: "1px 6px", borderRadius: 4, color: C.saffron, fontFamily: "monospace" }}>admin123</code><br />
+                  Staff Admin: <code style={{ background: "rgba(37,99,235,0.08)", padding: "1px 6px", borderRadius: 4, color: "#2563EB", fontFamily: "monospace" }}>staff</code> / <code style={{ background: "rgba(37,99,235,0.08)", padding: "1px 6px", borderRadius: 4, color: "#2563EB", fontFamily: "monospace" }}>staff123</code>
+                </div>
               </div>
             </div>
 
