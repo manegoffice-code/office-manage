@@ -1,24 +1,32 @@
-// backend/server/db.js
+// require("dotenv").config();
+
 const mysql = require("mysql2/promise");
 
 const pool = mysql.createPool({
-  host:     process.env.MYSQLHOST     || process.env.DB_HOST     || "mysql.railway.internal",
-  port:     parseInt(process.env.MYSQLPORT || process.env.DB_PORT || "3306"),
-  user:     process.env.MYSQLUSER     || process.env.DB_USER     || "root",
-  password: process.env.MYSQLPASSWORD || process.env.DB_PASSWORD || "",
-  database: process.env.MYSQLDATABASE || process.env.DB_NAME     || "mla_office",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
+
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
+
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
-pool.getConnection()
-  .then((connection) => {
-    console.log("✅ MySQL Connected Successfully");
+// Test connection
+(async () => {
+  try {
+    const connection = await pool.getConnection();
+    console.log("✅ Railway MySQL Connected Successfully");
     connection.release();
-  })
-  .catch((err) => {
-    console.log("❌ Database Connection Failed:", err.message);
-  });
+  } catch (err) {
+    console.error("❌ Database Connection Failed:", err.message);
+  }
+})();
 
 module.exports = pool;
