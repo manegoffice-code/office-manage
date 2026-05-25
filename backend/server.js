@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
     cb(null, safe);
   },
 });
-const upload = multer({ storage, limits: { fileSize: 50 * 1024 * 1024 } }); // 50 MB limit
+const upload = multer({ storage, limits: { fileSize: 50 * 1024 * 1024 } }); // 50 MB
 
 const { register, login, adminLogin }           = require("./server/users");
 const {
@@ -36,7 +36,25 @@ const { allowRoles }                            = require("./server/roles");
 
 const app = express();
 
-app.use(cors());
+// ── CORS — allow Vercel frontend + localhost dev ─────────────
+const allowedOrigins = [
+  process.env.FRONTEND_URL,          // e.g. https://your-app.vercel.app
+  "http://localhost:5173",           // Vite dev server
+  "http://localhost:3000",
+].filter(Boolean);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (Postman, Railway health checks)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    callback(new Error(`CORS blocked: ${origin}`));
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
+
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
@@ -60,9 +78,9 @@ app.get("/api/appointments",               getAppointments);
 app.patch("/api/appointments/:id/status",  updateAppointmentStatus);
 
 // ── NOTICES ──────────────────────────────────────────────────
-app.get("/api/notices",            getNotices);
-app.post("/api/notices",           upload.array("files", 4), addNotice);
-app.delete("/api/notices/:id",     deleteNotice);
+app.get("/api/notices",        getNotices);
+app.post("/api/notices",       upload.array("files", 4), addNotice);
+app.delete("/api/notices/:id", deleteNotice);
 
 // ── STATS ────────────────────────────────────────────────────
 app.get("/api/stats", async (req, res) => {
@@ -79,7 +97,11 @@ app.get("/api/stats", async (req, res) => {
   }
 });
 
+// ── Health check (Railway pings this) ────────────────────────
+app.get("/health", (req, res) => res.json({ status: "ok" }));
+
 // ── START ────────────────────────────────────────────────────
-app.listen(5000, () => {
-  console.log("✅ Server running on http://localhost:5000");
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
 });
