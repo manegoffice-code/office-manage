@@ -1,13 +1,15 @@
+// db.js — Railway MySQL pool
+// dotenv is already loaded in server.js; this line is safe even if no .env file exists
 require("dotenv").config();
 
 const mysql = require("mysql2/promise");
 
 const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
+  host:     process.env.DB_HOST,
+  user:     process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
+  port:     Number(process.env.DB_PORT) || 3306,
 
   waitForConnections: true,
   connectionLimit: 10,
@@ -18,7 +20,7 @@ const pool = mysql.createPool({
   },
 });
 
-// Test connection
+// Test connection on startup
 (async () => {
   try {
     const connection = await pool.getConnection();
@@ -26,6 +28,7 @@ const pool = mysql.createPool({
     connection.release();
   } catch (err) {
     console.error("❌ Database Connection Failed:", err.message);
+    // Don't crash the process — let health check still respond
   }
 })();
 
