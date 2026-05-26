@@ -1,6 +1,6 @@
 // backend/server.js
 // dotenv: loads .env for local dev; on Railway env vars are injected directly
-require("dotenv").config();
+try { require("dotenv").config(); } catch {}
 
 const express = require("express");
 const cors    = require("cors");
