@@ -1,6 +1,6 @@
 // db.js — Railway MySQL pool
-// dotenv is already loaded in server.js; this line is safe even if no .env file exists
-require("dotenv").config();
+// dotenv: loads .env for local dev; on Railway env vars are injected directly
+try { require("dotenv").config(); } catch {}
 
 const mysql = require("mysql2/promise");
 
