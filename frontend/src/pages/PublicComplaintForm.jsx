@@ -4,7 +4,7 @@
 
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import api from "../services/api";
 
 /* ─── Design tokens (match index.html :root) ─────────────────────────────── */
 const D = {
@@ -185,7 +185,7 @@ export default function PublicComplaintForm() {
     setErrors({});
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/complaints", {
+      await api.post("/complaints", {
         full_name: form.full_name,
         mobile:    form.mobile,
         area:      form.area,
