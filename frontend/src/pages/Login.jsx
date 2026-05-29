@@ -8,38 +8,38 @@ import { useNavigate, Link } from "react-router-dom";
 
 /* ─── Design tokens ─────────────────────────────────────────── */
 const C = {
-  navy:       "#0D1B3E",
-  navyLight:  "#162347",
-  navyGlass:  "rgba(13,27,62,0.92)",
-  saffron:    "#FF6B00",
-  saffronSoft:"#FF8C38",
-  saffronGlow:"rgba(255,107,0,0.18)",
-  gold:       "#C8942A",
-  goldLight:  "#E8B84B",
-  goldGlow:   "rgba(200,148,42,0.15)",
-  white:      "#FFFFFF",
-  offWhite:   "#F8F6F2",
-  cream:      "#FDF9F3",
-  border:     "rgba(200,148,42,0.25)",
-  borderLight:"rgba(255,255,255,0.10)",
-  muted:      "#8A92A6",
-  mutedDark:  "#5A6480",
-  error:      "#E84444",
-  errorBg:    "rgba(232,68,68,0.08)",
-  textPrimary:"#1A2545",
+  navy: "#0D1B3E",
+  navyLight: "#162347",
+  navyGlass: "rgba(13,27,62,0.92)",
+  saffron: "#FF6B00",
+  saffronSoft: "#FF8C38",
+  saffronGlow: "rgba(255,107,0,0.18)",
+  gold: "#C8942A",
+  goldLight: "#E8B84B",
+  goldGlow: "rgba(200,148,42,0.15)",
+  white: "#FFFFFF",
+  offWhite: "#F8F6F2",
+  cream: "#FDF9F3",
+  border: "rgba(200,148,42,0.25)",
+  borderLight: "rgba(255,255,255,0.10)",
+  muted: "#8A92A6",
+  mutedDark: "#5A6480",
+  error: "#E84444",
+  errorBg: "rgba(232,68,68,0.08)",
+  textPrimary: "#1A2545",
   textSecond: "#4A5578",
 };
 
 const ROLES = [
   {
-    key:   "main_admin",
+    key: "main_admin",
     label: "Main Admin",
     subtitle: "Full Access",
-    desc:  "Complete system control — manage all data, users & configurations",
+    desc: "Complete system control — manage all data, users & configurations",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        <polyline points="9 12 11 14 15 10"/>
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <polyline points="9 12 11 14 15 10" />
       </svg>
     ),
     gradient: `linear-gradient(135deg, ${C.saffron}, ${C.gold})`,
@@ -47,14 +47,14 @@ const ROLES = [
     shadow: "rgba(255,107,0,0.30)",
   },
   {
-    key:   "staff_admin",
+    key: "staff_admin",
     label: "Staff Admin",
     subtitle: "Limited Access",
-    desc:  "Add & update entries — manage complaints and appointments",
+    desc: "Add & update entries — manage complaints and appointments",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-        <circle cx="12" cy="7" r="4"/>
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
       </svg>
     ),
     gradient: `linear-gradient(135deg, #1E3A8A, #2563EB)`,
@@ -104,68 +104,68 @@ function Particles() {
 /* ─── Main component ─────────────────────────────────────────── */
 export default function Login() {
   const [selectedRole, setSelectedRole] = useState(null);
-  const [username,     setUsername]     = useState("");
-  const [password,     setPassword]     = useState("");
-  const [showPass,     setShowPass]     = useState(false);
-  const [error,        setError]        = useState("");
-  const [loading,      setLoading]      = useState(false);
-  const [fUser,        setFUser]        = useState(false);
-  const [fPass,        setFPass]        = useState(false);
-  const [mounted,      setMounted]      = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPass, setShowPass] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [fUser, setFUser] = useState(false);
+  const [fPass, setFPass] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const navigate = useNavigate();
 
   const chosenRole = ROLES.find(r => r.key === selectedRole);
 
   useEffect(() => {
-  setTimeout(() => setMounted(true), 60);
-}, []);
+    setTimeout(() => setMounted(true), 60);
+  }, []);
 
-// 👇 YA KHAlI PASTE KARA
-const handleLogin = () => {
-  setError("");
+  // 👇 YA KHAlI PASTE KARA
+  const handleLogin = () => {
+    setError("");
 
-  console.log("Role:", selectedRole);
-  console.log("Username:", username);
-  console.log("Password:", password);
+    console.log("Role:", selectedRole);
+    console.log("Username:", username);
+    console.log("Password:", password);
 
-  // Main Admin Login
-  if (
-    username.trim() === "admin" &&
-    password.trim() === "admin@123"
-  ) {
+    // Main Admin Login
+    if (
+      username.trim() === "admin" &&
+      password.trim() === "admin@123"
+    ) {
 
-    localStorage.setItem(
-      "admin_user",
-      JSON.stringify({
-        username: "admin",
-        
-      })
-    );
+      localStorage.setItem(
+        "admin_user",
+        JSON.stringify({
+          username: "admin",
 
-    navigate("/admin");
-    return;
-  }
+        })
+      );
 
-  // Staff Admin Login
-  if (
-    username.trim() === "staff" &&
-    password.trim() === "staff@123"
-  ) {
+      navigate("/admin");
+      return;
+    }
 
-    localStorage.setItem(
-      "admin_user",
-      JSON.stringify({
-        username: "staff",
-        role: "staff_admin",
-      })
-    );
+    // Staff Admin Login
+    if (
+      username.trim() === "staff" &&
+      password.trim() === "staff@123"
+    ) {
 
-   navigate("/dashboard");
-    return;
-  }
+      localStorage.setItem(
+        "admin_user",
+        JSON.stringify({
+          username: "staff",
+          role: "staff_admin",
+        })
+      );
 
-  setError("Login failed. Check your credentials.");
-};
+      navigate("/dashboard");
+      return;
+    }
+
+    setError("Login failed. Check your credentials.");
+  };
   return (
     <div style={{
       minHeight: "100vh",
@@ -291,7 +291,7 @@ const handleLogin = () => {
               flexShrink: 0,
             }}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
               </svg>
             </div>
             <div>
@@ -373,7 +373,7 @@ const handleLogin = () => {
                   flexShrink: 0,
                 }}>
                   <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke={C.saffron} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="2 6 5 9 10 3"/>
+                    <polyline points="2 6 5 9 10 3" />
                   </svg>
                 </div>
                 <span style={{ fontSize: 12.5, color: "rgba(255,255,255,0.50)" }}>{f}</span>
@@ -394,7 +394,7 @@ const handleLogin = () => {
             onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.28)"}
           >
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+              <line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" />
             </svg>
             Back to Public Homepage
           </Link>
@@ -529,7 +529,7 @@ const handleLogin = () => {
                       flexShrink: 0, color: C.mutedDark,
                     }}>
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="9 18 15 12 9 6"/>
+                        <polyline points="9 18 15 12 9 6" />
                       </svg>
                     </div>
                   </button>
@@ -569,7 +569,7 @@ const handleLogin = () => {
                   }}
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+                    <line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" />
                   </svg>
                   Back
                 </button>
@@ -616,7 +616,7 @@ const handleLogin = () => {
                   marginBottom: 22, animation: "slideIn 0.2s ease",
                 }}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.error} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 1 }}>
-                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                    <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
                   </svg>
                   <span style={{ fontSize: 13, color: C.error, lineHeight: 1.5 }}>{error}</span>
                 </div>
@@ -635,7 +635,7 @@ const handleLogin = () => {
                     color: fUser ? chosenRole.accent : C.muted, transition: "color 0.2s",
                   }}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
                     </svg>
                   </div>
                   <input
@@ -673,7 +673,7 @@ const handleLogin = () => {
                     color: fPass ? chosenRole.accent : C.muted, transition: "color 0.2s",
                   }}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
                     </svg>
                   </div>
                   <input
@@ -705,12 +705,12 @@ const handleLogin = () => {
                   >
                     {showPass ? (
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
-                        <line x1="1" y1="1" x2="23" y2="23"/>
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                        <line x1="1" y1="1" x2="23" y2="23" />
                       </svg>
                     ) : (
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" />
                       </svg>
                     )}
                   </button>
@@ -750,7 +750,7 @@ const handleLogin = () => {
                   <>
                     Sign In as {chosenRole.label}
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                      <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
                     </svg>
                   </>
                 )}
@@ -762,7 +762,7 @@ const handleLogin = () => {
                 justifyContent: "center", gap: 6,
               }}>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={C.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
                 <span style={{ fontSize: 11.5, color: C.muted }}>
                   Access restricted to authorized personnel only
