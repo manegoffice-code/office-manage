@@ -4,9 +4,9 @@
 // staff_admin can only view posts shared with them or public.
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api";
 
-const BASE = "http://localhost:5000/api";
+
 
 function getUser() {
   try { const u = localStorage.getItem("admin_user"); return u ? JSON.parse(u) : null; }
@@ -41,7 +41,7 @@ export default function Posts() {
 
   const load = () => {
     setLoading(true);
-    axios.get(`${BASE}/posts?role=${user?.role || "public"}`)
+    api.get(`/posts?role=${user?.role || "public"}`)
       .then(res => setPosts(res.data))
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -54,7 +54,7 @@ export default function Posts() {
     if (!title.trim()) { setFormErr("Title is required."); return; }
     setSaving(true);
     try {
-      await axios.post(`${BASE}/posts`, {
+      await api.post(`/posts`, {
         title: title.trim(),
         content: content.trim(),
         visibility,
@@ -73,7 +73,7 @@ export default function Posts() {
     setDelBusy(p => ({ ...p, [id]: true }));
     setConfirmDel(null);
     try {
-      await axios.delete(`${BASE}/posts/${id}`);
+      await api.delete(`/posts/${id}`);
       setPosts(p => p.filter(x => x.id !== id));
     } catch { alert("Failed to delete post."); }
     finally { setDelBusy(p => ({ ...p, [id]: false })); }
