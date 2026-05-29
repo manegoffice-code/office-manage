@@ -3,7 +3,8 @@
 // LOGIC: UNCHANGED. Only UI redesigned.
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api";
+
 
 function getUser() {
   try { const u = localStorage.getItem("admin_user"); return u ? JSON.parse(u) : null; }
@@ -31,7 +32,7 @@ export default function Appointments() {
 
   useEffect(() => {
     let cancelled = false;
-    axios.get("http://localhost:5000/api/appointments")
+    api.get("/appointments")
       .then(res => { if (!cancelled) setAppointments(res.data); })
       .catch(() => {})
       .finally(() => { if (!cancelled) setLoading(false); });
@@ -41,7 +42,7 @@ export default function Appointments() {
   const changeStatus = async (id, newStatus) => {
     setStatusBusy(prev => ({ ...prev, [id]: true }));
     try {
-      await axios.patch(`http://localhost:5000/api/appointments/${id}/status`, { status: newStatus });
+      await api.patch(`/appointments/${id}/status`, { status: newStatus });
       setAppointments(prev => prev.map(a => a.id === id ? { ...a, status: newStatus } : a));
     } catch { alert("Failed to update status."); }
     finally { setStatusBusy(prev => ({ ...prev, [id]: false })); }
