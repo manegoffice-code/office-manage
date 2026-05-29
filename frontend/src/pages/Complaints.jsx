@@ -3,7 +3,8 @@
 // LOGIC: UNCHANGED. Only UI redesigned.
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api";
+
 
 function getUser() {
   try { const u = localStorage.getItem("admin_user"); return u ? JSON.parse(u) : null; }
@@ -31,7 +32,7 @@ export default function Complaints() {
 
   useEffect(() => {
     let cancelled = false;
-    axios.get("http://localhost:5000/api/complaints")
+    api.get("/complaints")
       .then(res => { if (!cancelled) setComplaints(res.data); })
       .catch(() => {})
       .finally(() => { if (!cancelled) setLoading(false); });
@@ -41,7 +42,7 @@ export default function Complaints() {
   const changeStatus = async (id, newStatus) => {
     setStatusBusy(prev => ({ ...prev, [id]: true }));
     try {
-      await axios.patch(`http://localhost:5000/api/complaints/${id}/status`, { status: newStatus });
+      await api.patch(`/complaints/${id}/status`, { status: newStatus });
       setComplaints(prev => prev.map(c => c.id === id ? { ...c, status: newStatus } : c));
     } catch { alert("Failed to update status."); }
     finally { setStatusBusy(prev => ({ ...prev, [id]: false })); }
