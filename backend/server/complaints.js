@@ -10,27 +10,54 @@ const addComplaint = async (req, res) => {
     if (!full_name || !mobile || !area || !subject || !details || !date) {
       return res.status(400).json({ error: "All fields are required" });
     }
+
     if (!/^\d{10}$/.test(mobile)) {
       return res.status(400).json({ error: "Mobile must be exactly 10 digits" });
     }
 
-    const uploadedFiles = (req.files || []).map(f => f.filename).join(",");
+    const uploadedFiles = (req.files || [])
+      .map((f) => f.filename)
+      .join(",");
 
     const [result] = await pool.query(
-      `INSERT INTO complaints (full_name, mobile, area, subject, details, complaint_date, status)
-       VALUES (?, ?, ?, ?, ?, ?, 'Pending')`,
-      [full_name, mobile, area, subject, details, date]
+      `INSERT INTO complaints 
+      (
+        full_name,
+        mobile,
+        area,
+        complaint,
+        subject,
+        details,
+        complaint_date,
+        status,
+        files
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        full_name,
+        mobile,
+        area,
+        details,
+        subject,
+        details,
+        date,
+        "Pending",
+        uploadedFiles || null,
+      ]
     );
 
     res.status(201).json({
       success: true,
       message: "Complaint submitted successfully",
       id: result.insertId,
-      files: uploadedFiles || null,
     });
+
   } catch (err) {
-    console.error("❌ Complaint insert error:", err.message);
-    res.status(500).json({ error: "Server error. Please try again." });
+    console.error("❌ Complaint insert error:", err);
+
+    res.status(500).json({
+      error: err.message,
+    });
   }
 };
 
