@@ -3,10 +3,11 @@
 // LOGIC: UNCHANGED. Form moved to modal, notices list shown first.
 
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
 
-const BASE    = "http://localhost:5000/api";
-const UPLOADS = "http://localhost:5000/uploads";
+
+import api from "../services/api";
+import { UPLOADS_URL } from "../services/api";
+
 
 export default function Notices() {
   const [data,       setData]       = useState([]);
@@ -22,13 +23,13 @@ export default function Notices() {
   const fileInputRef = useRef(null);
 
   const load = async () => {
-    try { const res = await axios.get(`${BASE}/notices`); setData(res.data); }
+    try { const res = await api.get("/notices"); setData(res.data); }
     catch { /* silently ignore */ }
   };
 
   useEffect(() => {
     let cancelled = false;
-    axios.get(`${BASE}/notices`)
+    api.get("/notices")
       .then(res => { if (!cancelled) setData(res.data); })
       .catch(() => {});
     return () => { cancelled = true; };
@@ -50,7 +51,7 @@ export default function Notices() {
       fd.append("title", title);
       fd.append("content", content);
       attachments.forEach(a => fd.append("files", a.file));
-      await axios.post(`${BASE}/notices`, fd, {
+      await api.post("/notices", fd, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       closeModal();
@@ -64,7 +65,7 @@ export default function Notices() {
 
   const remove = async (id) => {
     if (!window.confirm("Delete this notice?")) return;
-    try { await axios.delete(`${BASE}/notices/${id}`); load(); }
+    try { await api.delete(`/notices/${id}`); load(); }
     catch { alert("Failed to delete notice."); }
   };
 
@@ -192,7 +193,7 @@ export default function Notices() {
                 {mediaFiles.length > 0 && (
                   <div style={{ display:"flex", flexWrap:"wrap", gap:6, marginBottom:10 }}>
                     {mediaFiles.map((fname, mi) => {
-                      const url = `${UPLOADS}/${fname}`;
+                      const url = `${UPLOADS_URL}/${fname}`;
                       const isVideo = /\.(mp4|webm|mov)$/i.test(fname);
                       return isVideo ? (
                         <video key={mi} src={url} controls style={{ height:90, borderRadius:8, border:"1px solid rgba(200,148,42,0.20)", objectFit:"cover", background:"#000", maxWidth:"100%" }} />
