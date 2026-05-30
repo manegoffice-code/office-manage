@@ -5,7 +5,14 @@ const pool = require("./db");
 // POST /api/complaints — PUBLIC (citizens submit, no login needed)
 const addComplaint = async (req, res) => {
   try {
-    const { full_name, mobile, area, subject, details, date } = req.body;
+    const {
+      full_name,
+      mobile,
+      area,
+      subject,
+      details,
+      complaint_date
+    } = req.body;
 
     if (!full_name || !mobile || !area || !subject || !details || !date) {
       return res.status(400).json({ error: "All fields are required" });
@@ -40,7 +47,7 @@ const addComplaint = async (req, res) => {
         details,
         subject,
         details,
-        date,
+        complaint_date,,
         "Pending",
         uploadedFiles || null,
       ]
