@@ -3,8 +3,9 @@
 // Application Home Page — App-style landing, not a public website
 
 import { useEffect, useState } from "react";
+import api from "../services/api";
 import { Link } from "react-router-dom";
-import axios from "axios";
+
 
 /* ─── Design Tokens ─────────────────────────────────────────── */
 const C = {
@@ -101,11 +102,11 @@ export default function Homepage() {
 
   useEffect(() => {
     let cancelled = false;
-    axios.get("http://localhost:5000/api/complaints/public")
+    api.get("/complaints/public")
       .then(res => { if (!cancelled) setComplaints(res.data); })
       .catch(() => {})
       .finally(() => { if (!cancelled) setLoading(false); });
-    axios.get("http://localhost:5000/api/stats")
+    api.get("/stats")
       .then(res => { if (!cancelled) setStats(res.data); })
       .catch(() => {});
     return () => { cancelled = true; };

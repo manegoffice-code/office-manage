@@ -4,7 +4,8 @@
 // All existing logic (status patch, entries, filters, search) UNCHANGED.
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api";
+
 
 function getUser() {
   try { const u = localStorage.getItem("admin_user"); return u ? JSON.parse(u) : null; }
@@ -27,7 +28,7 @@ const EntriesPanel = ({ complaintId, username }) => {
 
   useEffect(() => {
     let cancelled = false;
-    axios.get(`http://localhost:5000/api/complaints/${complaintId}/entries`)
+    api.get(`/complaints/${complaintId}/entries`)
       .then(res => { if (!cancelled) setEntries(res.data); })
       .catch(() => {});
     return () => { cancelled = true; };
@@ -37,11 +38,11 @@ const EntriesPanel = ({ complaintId, username }) => {
     if (!note.trim()) return;
     setSaving(true);
     try {
-      await axios.post(`http://localhost:5000/api/complaints/${complaintId}/entries`, {
+      await api.post(`/complaints/${complaintId}/entries`, {
         entry_note: note, added_by: username,
       });
       setNote("");
-      const res = await axios.get(`http://localhost:5000/api/complaints/${complaintId}/entries`);
+      const res = await api.get(`/complaints/${complaintId}/entries`);
       setEntries(res.data);
     } catch { alert("Failed to add entry."); }
     finally { setSaving(false); }
@@ -99,7 +100,7 @@ export default function AdminDashboard() {
   /* ── Fetch complaints — UNCHANGED ── */
   useEffect(() => {
     let cancelled = false;
-    axios.get("http://localhost:5000/api/complaints")
+    api.get("/complaints")
       .then(res => { if (!cancelled) setComplaints(res.data); })
       .catch(() => {})
       .finally(() => { if (!cancelled) setLoading(false); });
@@ -110,7 +111,7 @@ export default function AdminDashboard() {
   const changeStatus = async (id, newStatus) => {
     setStatusBusy(prev => ({ ...prev, [id]: true }));
     try {
-      await axios.patch(`http://localhost:5000/api/complaints/${id}/status`, { status: newStatus });
+      await api.patch(`/complaints/${id}/status`, { status: newStatus });
       setComplaints(prev => prev.map(c => c.id === id ? { ...c, status: newStatus } : c));
     } catch { alert("Failed to update status."); }
     finally { setStatusBusy(prev => ({ ...prev, [id]: false })); }
@@ -121,7 +122,7 @@ export default function AdminDashboard() {
     setDeleteBusy(prev => ({ ...prev, [id]: true }));
     setConfirmDel(null);
     try {
-      await axios.delete(`http://localhost:5000/api/complaints/${id}`);
+      await api.delete(`/complaints/${id}`);
       setComplaints(prev => prev.filter(c => c.id !== id));
       if (expanded === id) setExpanded(null);
     } catch { alert("Failed to delete complaint."); }
@@ -480,4 +481,4 @@ export default function AdminDashboard() {
       </div>
     </div>
   );
-}
+
