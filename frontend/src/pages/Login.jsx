@@ -1,5 +1,5 @@
 // frontend/src/pages/Login.jsx
-// udaysangle — Premium Political Office Management System
+// Uday Sangle — Premium Political Office Management System
 // Redesigned: Ultra-clean, enterprise-grade, saffron + navy + gold aesthetic
 
 import { useState, useEffect } from "react";
