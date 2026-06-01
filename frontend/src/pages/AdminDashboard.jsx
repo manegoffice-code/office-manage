@@ -1,5 +1,5 @@
 // frontend/src/pages/AdminDashboard.jsx
-// BJP Shinde Group — Premium Political Office Management System
+// Uday Sangle — Premium Political Office Management System
 // CHANGE: Full complaint detail panel + Confirm / Mark Done / Delete actions.
 // All existing logic (status patch, entries, filters, search) UNCHANGED.
 
