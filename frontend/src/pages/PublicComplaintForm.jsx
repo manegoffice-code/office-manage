@@ -1,5 +1,5 @@
 // frontend/src/pages/PublicComplaintForm.jsx
-// Public Complaint Form — Premium Redesign matching dashboard UI
+// Uday Sangle — Premium Redesign matching dashboard UI
 // LOGIC: UNCHANGED. Only UI redesigned with photo/video upload & location support.
 
 import { useState, useRef } from "react";
