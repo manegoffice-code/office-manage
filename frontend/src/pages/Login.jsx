@@ -546,8 +546,8 @@ export default function Login() {
                   Default Credentials
                 </div>
                 <div style={{ fontSize: 12, color: C.mutedDark, lineHeight: 1.9 }}>
-                  Main Admin: <code style={{ background: "rgba(255,107,0,0.08)", padding: "1px 6px", borderRadius: 4, color: C.saffron, fontFamily: "monospace" }}>admin</code> / <code style={{ background: "rgba(255,107,0,0.08)", padding: "1px 6px", borderRadius: 4, color: C.saffron, fontFamily: "monospace" }}>admin123</code><br />
-                  Staff Admin: <code style={{ background: "rgba(37,99,235,0.08)", padding: "1px 6px", borderRadius: 4, color: "#2563EB", fontFamily: "monospace" }}>staff</code> / <code style={{ background: "rgba(37,99,235,0.08)", padding: "1px 6px", borderRadius: 4, color: "#2563EB", fontFamily: "monospace" }}>staff123</code>
+                  Main Admin: <code style={{ background: "rgba(255,107,0,0.08)", padding: "1px 6px", borderRadius: 4, color: C.saffron, fontFamily: "monospace" }}>admin</code> / <code style={{ background: "rgba(255,107,0,0.08)", padding: "1px 6px", borderRadius: 4, color: C.saffron, fontFamily: "monospace" }}>admin@123</code><br />
+                  Staff Admin: <code style={{ background: "rgba(37,99,235,0.08)", padding: "1px 6px", borderRadius: 4, color: "#2563EB", fontFamily: "monospace" }}>staff</code> / <code style={{ background: "rgba(37,99,235,0.08)", padding: "1px 6px", borderRadius: 4, color: "#2563EB", fontFamily: "monospace" }}>staff@123</code>
                 </div>
               </div>
             </div>
