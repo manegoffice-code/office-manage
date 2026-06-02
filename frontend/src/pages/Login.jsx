@@ -108,7 +108,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [fUser, setFUser] = useState(false);
   const [fPass, setFPass] = useState(false);
   const [mounted, setMounted] = useState(false);
