@@ -11,11 +11,18 @@ const addComplaint = async (req, res) => {
       area,
       subject,
       details,
+<<<<<<< HEAD
       complaint_date,
     } = req.body;
 
     // ✅ FIX 1: was checking `!date` (undefined) — now correctly checks `!complaint_date`
     if (!full_name || !mobile || !area || !subject || !details || !complaint_date) {
+=======
+      complaint_date
+    } = req.body;
+
+    if (!full_name || !mobile || !area || !subject || !details || !date) {
+>>>>>>> 3d0f566a6d5550f072f47006d0b50a06afea0d21
       return res.status(400).json({ error: "All fields are required" });
     }
 
@@ -27,19 +34,43 @@ const addComplaint = async (req, res) => {
       .map((f) => f.filename)
       .join(",");
 
+<<<<<<< HEAD
     // ✅ FIX 2: removed duplicate `complaint` column, fixed INSERT column order
     // columns: full_name, mobile, area, subject, details, complaint_date, status, files
     const [result] = await pool.query(
       `INSERT INTO complaints 
       (full_name, mobile, area, subject, details, complaint_date, status, files)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+=======
+    const [result] = await pool.query(
+      `INSERT INTO complaints 
+      (
+        full_name,
+        mobile,
+        area,
+        complaint,
+        subject,
+        details,
+        complaint_date,
+        status,
+        files
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+>>>>>>> 3d0f566a6d5550f072f47006d0b50a06afea0d21
       [
         full_name,
         mobile,
         area,
+<<<<<<< HEAD
         subject,
         details,
         complaint_date,
+=======
+        details,
+        subject,
+        details,
+        complaint_date,,
+>>>>>>> 3d0f566a6d5550f072f47006d0b50a06afea0d21
         "Pending",
         uploadedFiles || null,
       ]
@@ -53,11 +84,22 @@ const addComplaint = async (req, res) => {
 
   } catch (err) {
     console.error("❌ Complaint insert error:", err);
+<<<<<<< HEAD
     res.status(500).json({ error: err.message });
   }
 };
 
 // GET /api/complaints — returns all complaints (used by admin)
+=======
+
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+};
+
+// GET /api/complaints — returns all complaints (used by admin + public)
+>>>>>>> 3d0f566a6d5550f072f47006d0b50a06afea0d21
 const getComplaints = async (req, res) => {
   try {
     const [rows] = await pool.query(
@@ -70,7 +112,11 @@ const getComplaints = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 // GET /api/complaints/public — PUBLIC, returns only Approved complaints
+=======
+// GET /api/complaints/public — PUBLIC, returns only Approved complaints for homepage
+>>>>>>> 3d0f566a6d5550f072f47006d0b50a06afea0d21
 const getPublicComplaints = async (req, res) => {
   try {
     const [rows] = await pool.query(
@@ -147,6 +193,10 @@ const getEntries = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3d0f566a6d5550f072f47006d0b50a06afea0d21
 // DELETE /api/complaints/:id
 const deleteComplaint = async (req, res) => {
   try {
@@ -155,7 +205,11 @@ const deleteComplaint = async (req, res) => {
     await pool.query("DELETE FROM complaints WHERE id = ?", [id]);
     res.json({ success: true, message: "Complaint deleted" });
   } catch (err) {
+<<<<<<< HEAD
     console.error("❌ Complaint delete error:", err.message);
+=======
+    console.error("\u274c Complaint delete error:", err.message);
+>>>>>>> 3d0f566a6d5550f072f47006d0b50a06afea0d21
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -168,4 +222,8 @@ module.exports = {
   deleteComplaint,
   addEntry,
   getEntries,
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 3d0f566a6d5550f072f47006d0b50a06afea0d21
