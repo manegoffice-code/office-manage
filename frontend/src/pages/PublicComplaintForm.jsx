@@ -185,18 +185,16 @@ export default function PublicComplaintForm() {
     setErrors({});
     setLoading(true);
     try {
-      await api.post("/complaints", {
-        full_name: form.full_name,
-        mobile:    form.mobile,
-        area:      form.area,
-        subject:   form.subject,
-        details:   `${form.details}${form.location ? `\n\nExact Location: ${form.location}` : ""}`,
- HEAD
-        complaint_date: form.date,
-=======
-        date:      form.date,
->>>>>>> 3d0f566a6d5550f072f47006d0b50a06afea0d21
-      });
+      
+     await api.post("/complaints", {
+  full_name: form.full_name,
+  mobile: form.mobile,
+  area: form.area,
+  subject: form.subject,
+  details: `${form.details}${form.location ? `\n\nExact Location: ${form.location}` : ""}`,
+  complaint_date: form.date,
+});
+
       setSuccess(true);
       setForm(EMPTY);
       setPhotoFile(null); setPhotoPreview(null);
