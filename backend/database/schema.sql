@@ -1,5 +1,5 @@
 -- ============================================================
-<<<<<<< HEAD
+ HEAD
 -- Run this ENTIRE block in Railway MySQL or MySQL Workbench
 =======
 -- Run this ENTIRE block in MySQL Workbench
@@ -9,7 +9,7 @@
 CREATE DATABASE IF NOT EXISTS mla_office;
 USE mla_office;
 
-<<<<<<< HEAD
+ HEAD
 -- Users (legacy, kept for compatibility)
 =======
 -- EXISTING TABLES (unchanged) ----------------------------------
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS tenants (
   state VARCHAR(100)
 );
 
-<<<<<<< HEAD
+ HEAD
 -- ✅ FIX: Added `files` column that was missing from original schema
 =======
 >>>>>>> 3d0f566a6d5550f072f47006d0b50a06afea0d21
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS complaints (
   details         TEXT          NOT NULL,
   complaint_date  DATE          NOT NULL,
   status          VARCHAR(50)   DEFAULT 'Pending',
-<<<<<<< HEAD
+ HEAD
   files           TEXT          NULL,
 =======
 >>>>>>> 3d0f566a6d5550f072f47006d0b50a06afea0d21
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS notices (
   id         INT AUTO_INCREMENT PRIMARY KEY,
   title      TEXT,
   content    TEXT,
-<<<<<<< HEAD
+ HEAD
   media      TEXT,
 =======
   media      TEXT,         -- ← new: comma-separated uploaded filenames
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS notices (
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-<<<<<<< HEAD
+ HEAD
 =======
 -- NEW TABLES ---------------------------------------------------
 
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS admin_users (
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-<<<<<<< HEAD
+ HEAD
 =======
 -- Sub-complaint entries linked to a parent complaint
 >>>>>>> 3d0f566a6d5550f072f47006d0b50a06afea0d21
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS complaint_entries (
   FOREIGN KEY (complaint_id) REFERENCES complaints(id) ON DELETE CASCADE
 );
 
-<<<<<<< HEAD
+ HEAD
 -- Seed default admin accounts
 INSERT IGNORE INTO admin_users (username, password, role) VALUES
   ('admin', 'admin@123', 'main_admin'),

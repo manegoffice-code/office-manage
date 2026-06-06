@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+HEAD
 // backend/tenant.js
 // Tenant middleware (kept for compatibility, not used in current routes)
 
@@ -14,7 +14,7 @@ const tenantFilter = (req, res, next) => {
 };
 
 module.exports = { tenantFilter };
-<<<<<<< HEAD
+HEAD
 =======
 
 

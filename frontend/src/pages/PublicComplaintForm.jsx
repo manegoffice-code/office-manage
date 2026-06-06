@@ -191,7 +191,7 @@ export default function PublicComplaintForm() {
         area:      form.area,
         subject:   form.subject,
         details:   `${form.details}${form.location ? `\n\nExact Location: ${form.location}` : ""}`,
-<<<<<<< HEAD
+ HEAD
         complaint_date: form.date,
 =======
         date:      form.date,

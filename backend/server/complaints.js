@@ -11,7 +11,7 @@ const addComplaint = async (req, res) => {
       area,
       subject,
       details,
-<<<<<<< HEAD
+ HEAD
       complaint_date,
     } = req.body;
 
@@ -34,7 +34,7 @@ const addComplaint = async (req, res) => {
       .map((f) => f.filename)
       .join(",");
 
-<<<<<<< HEAD
+ HEAD
     // ✅ FIX 2: removed duplicate `complaint` column, fixed INSERT column order
     // columns: full_name, mobile, area, subject, details, complaint_date, status, files
     const [result] = await pool.query(
@@ -61,7 +61,7 @@ const addComplaint = async (req, res) => {
         full_name,
         mobile,
         area,
-<<<<<<< HEAD
+ HEAD
         subject,
         details,
         complaint_date,
@@ -84,7 +84,7 @@ const addComplaint = async (req, res) => {
 
   } catch (err) {
     console.error("❌ Complaint insert error:", err);
-<<<<<<< HEAD
+ HEAD
     res.status(500).json({ error: err.message });
   }
 };
@@ -112,7 +112,7 @@ const getComplaints = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
+ HEAD
 // GET /api/complaints/public — PUBLIC, returns only Approved complaints
 =======
 // GET /api/complaints/public — PUBLIC, returns only Approved complaints for homepage
@@ -193,10 +193,6 @@ const getEntries = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 3d0f566a6d5550f072f47006d0b50a06afea0d21
 // DELETE /api/complaints/:id
 const deleteComplaint = async (req, res) => {
   try {
@@ -205,7 +201,7 @@ const deleteComplaint = async (req, res) => {
     await pool.query("DELETE FROM complaints WHERE id = ?", [id]);
     res.json({ success: true, message: "Complaint deleted" });
   } catch (err) {
-<<<<<<< HEAD
+ HEAD
     console.error("❌ Complaint delete error:", err.message);
 =======
     console.error("\u274c Complaint delete error:", err.message);
@@ -222,7 +218,7 @@ module.exports = {
   deleteComplaint,
   addEntry,
   getEntries,
-<<<<<<< HEAD
+   HEAD
 };
 =======
 };
