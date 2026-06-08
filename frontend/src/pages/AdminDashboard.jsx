@@ -1,10 +1,19 @@
 // frontend/src/pages/AdminDashboard.jsx
+<<<<<<< HEAD
 // BJP Shinde Group — Premium Political Office Management System
+=======
+// Uday Sangle — Premium Political Office Management System
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
 // CHANGE: Full complaint detail panel + Confirm / Mark Done / Delete actions.
 // All existing logic (status patch, entries, filters, search) UNCHANGED.
 
 import { useEffect, useState } from "react";
+<<<<<<< HEAD
 import axios from "axios";
+=======
+import api from "../services/api";
+
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
 
 function getUser() {
   try { const u = localStorage.getItem("admin_user"); return u ? JSON.parse(u) : null; }
@@ -27,7 +36,11 @@ const EntriesPanel = ({ complaintId, username }) => {
 
   useEffect(() => {
     let cancelled = false;
+<<<<<<< HEAD
     axios.get(`http://localhost:5000/api/complaints/${complaintId}/entries`)
+=======
+    api.get(`/complaints/${complaintId}/entries`)
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
       .then(res => { if (!cancelled) setEntries(res.data); })
       .catch(() => {});
     return () => { cancelled = true; };
@@ -37,11 +50,19 @@ const EntriesPanel = ({ complaintId, username }) => {
     if (!note.trim()) return;
     setSaving(true);
     try {
+<<<<<<< HEAD
       await axios.post(`http://localhost:5000/api/complaints/${complaintId}/entries`, {
         entry_note: note, added_by: username,
       });
       setNote("");
       const res = await axios.get(`http://localhost:5000/api/complaints/${complaintId}/entries`);
+=======
+      await api.post(`/complaints/${complaintId}/entries`, {
+        entry_note: note, added_by: username,
+      });
+      setNote("");
+      const res = await api.get(`/complaints/${complaintId}/entries`);
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
       setEntries(res.data);
     } catch { alert("Failed to add entry."); }
     finally { setSaving(false); }
@@ -99,7 +120,11 @@ export default function AdminDashboard() {
   /* ── Fetch complaints — UNCHANGED ── */
   useEffect(() => {
     let cancelled = false;
+<<<<<<< HEAD
     axios.get("http://localhost:5000/api/complaints")
+=======
+    api.get("/complaints")
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
       .then(res => { if (!cancelled) setComplaints(res.data); })
       .catch(() => {})
       .finally(() => { if (!cancelled) setLoading(false); });
@@ -110,7 +135,11 @@ export default function AdminDashboard() {
   const changeStatus = async (id, newStatus) => {
     setStatusBusy(prev => ({ ...prev, [id]: true }));
     try {
+<<<<<<< HEAD
       await axios.patch(`http://localhost:5000/api/complaints/${id}/status`, { status: newStatus });
+=======
+      await api.patch(`/complaints/${id}/status`, { status: newStatus });
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
       setComplaints(prev => prev.map(c => c.id === id ? { ...c, status: newStatus } : c));
     } catch { alert("Failed to update status."); }
     finally { setStatusBusy(prev => ({ ...prev, [id]: false })); }
@@ -121,7 +150,11 @@ export default function AdminDashboard() {
     setDeleteBusy(prev => ({ ...prev, [id]: true }));
     setConfirmDel(null);
     try {
+<<<<<<< HEAD
       await axios.delete(`http://localhost:5000/api/complaints/${id}`);
+=======
+      await api.delete(`/complaints/${id}`);
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
       setComplaints(prev => prev.filter(c => c.id !== id));
       if (expanded === id) setExpanded(null);
     } catch { alert("Failed to delete complaint."); }
@@ -480,4 +513,8 @@ export default function AdminDashboard() {
       </div>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50

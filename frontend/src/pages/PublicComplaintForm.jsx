@@ -1,10 +1,18 @@
 // frontend/src/pages/PublicComplaintForm.jsx
+<<<<<<< HEAD
 // Public Complaint Form — Premium Redesign matching dashboard UI
+=======
+// Uday Sangle — Premium Redesign matching dashboard UI
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
 // LOGIC: UNCHANGED. Only UI redesigned with photo/video upload & location support.
 
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import axios from "axios";
+=======
+import api from "../services/api";
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
 
 /* ─── Design tokens (match index.html :root) ─────────────────────────────── */
 const D = {
@@ -185,6 +193,7 @@ export default function PublicComplaintForm() {
     setErrors({});
     setLoading(true);
     try {
+<<<<<<< HEAD
       await axios.post("http://localhost:5000/api/complaints", {
         full_name: form.full_name,
         mobile:    form.mobile,
@@ -193,6 +202,18 @@ export default function PublicComplaintForm() {
         details:   `${form.details}${form.location ? `\n\nExact Location: ${form.location}` : ""}`,
         date:      form.date,
       });
+=======
+      
+     await api.post("/complaints", {
+  full_name: form.full_name,
+  mobile: form.mobile,
+  area: form.area,
+  subject: form.subject,
+  details: `${form.details}${form.location ? `\n\nExact Location: ${form.location}` : ""}`,
+  complaint_date: form.date,
+});
+
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
       setSuccess(true);
       setForm(EMPTY);
       setPhotoFile(null); setPhotoPreview(null);
@@ -419,4 +440,8 @@ export default function PublicComplaintForm() {
       </footer>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50

@@ -4,9 +4,15 @@
 // staff_admin can only view posts shared with them or public.
 
 import { useEffect, useState } from "react";
+<<<<<<< HEAD
 import axios from "axios";
 
 const BASE = "http://localhost:5000/api";
+=======
+import api from "../services/api";
+
+
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
 
 function getUser() {
   try { const u = localStorage.getItem("admin_user"); return u ? JSON.parse(u) : null; }
@@ -41,7 +47,11 @@ export default function Posts() {
 
   const load = () => {
     setLoading(true);
+<<<<<<< HEAD
     axios.get(`${BASE}/posts?role=${user?.role || "public"}`)
+=======
+    api.get(`/posts?role=${user?.role || "public"}`)
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
       .then(res => setPosts(res.data))
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -54,7 +64,11 @@ export default function Posts() {
     if (!title.trim()) { setFormErr("Title is required."); return; }
     setSaving(true);
     try {
+<<<<<<< HEAD
       await axios.post(`${BASE}/posts`, {
+=======
+      await api.post(`/posts`, {
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
         title: title.trim(),
         content: content.trim(),
         visibility,
@@ -73,7 +87,11 @@ export default function Posts() {
     setDelBusy(p => ({ ...p, [id]: true }));
     setConfirmDel(null);
     try {
+<<<<<<< HEAD
       await axios.delete(`${BASE}/posts/${id}`);
+=======
+      await api.delete(`/posts/${id}`);
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
       setPosts(p => p.filter(x => x.id !== id));
     } catch { alert("Failed to delete post."); }
     finally { setDelBusy(p => ({ ...p, [id]: false })); }
@@ -395,4 +413,8 @@ export default function Posts() {
       </div>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50

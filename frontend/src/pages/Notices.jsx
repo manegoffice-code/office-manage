@@ -3,10 +3,18 @@
 // LOGIC: UNCHANGED. Form moved to modal, notices list shown first.
 
 import { useState, useEffect, useRef } from "react";
+<<<<<<< HEAD
 import axios from "axios";
 
 const BASE    = "http://localhost:5000/api";
 const UPLOADS = "http://localhost:5000/uploads";
+=======
+
+
+import api from "../services/api";
+import { UPLOADS_URL } from "../services/api";
+
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
 
 export default function Notices() {
   const [data,       setData]       = useState([]);
@@ -22,13 +30,21 @@ export default function Notices() {
   const fileInputRef = useRef(null);
 
   const load = async () => {
+<<<<<<< HEAD
     try { const res = await axios.get(`${BASE}/notices`); setData(res.data); }
+=======
+    try { const res = await api.get("/notices"); setData(res.data); }
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
     catch { /* silently ignore */ }
   };
 
   useEffect(() => {
     let cancelled = false;
+<<<<<<< HEAD
     axios.get(`${BASE}/notices`)
+=======
+    api.get("/notices")
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
       .then(res => { if (!cancelled) setData(res.data); })
       .catch(() => {});
     return () => { cancelled = true; };
@@ -50,7 +66,11 @@ export default function Notices() {
       fd.append("title", title);
       fd.append("content", content);
       attachments.forEach(a => fd.append("files", a.file));
+<<<<<<< HEAD
       await axios.post(`${BASE}/notices`, fd, {
+=======
+      await api.post("/notices", fd, {
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
         headers: { "Content-Type": "multipart/form-data" },
       });
       closeModal();
@@ -64,7 +84,11 @@ export default function Notices() {
 
   const remove = async (id) => {
     if (!window.confirm("Delete this notice?")) return;
+<<<<<<< HEAD
     try { await axios.delete(`${BASE}/notices/${id}`); load(); }
+=======
+    try { await api.delete(`/notices/${id}`); load(); }
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
     catch { alert("Failed to delete notice."); }
   };
 
@@ -192,7 +216,11 @@ export default function Notices() {
                 {mediaFiles.length > 0 && (
                   <div style={{ display:"flex", flexWrap:"wrap", gap:6, marginBottom:10 }}>
                     {mediaFiles.map((fname, mi) => {
+<<<<<<< HEAD
                       const url = `${UPLOADS}/${fname}`;
+=======
+                      const url = `${UPLOADS_URL}/${fname}`;
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
                       const isVideo = /\.(mp4|webm|mov)$/i.test(fname);
                       return isVideo ? (
                         <video key={mi} src={url} controls style={{ height:90, borderRadius:8, border:"1px solid rgba(200,148,42,0.20)", objectFit:"cover", background:"#000", maxWidth:"100%" }} />
@@ -470,4 +498,8 @@ export default function Notices() {
       `}</style>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50

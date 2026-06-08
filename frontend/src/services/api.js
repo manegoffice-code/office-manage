@@ -1,11 +1,19 @@
 import axios from "axios";
 
+<<<<<<< HEAD
 const api = axios.create({
   baseURL: "http://localhost:5000/api",
+=======
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+const api = axios.create({
+  baseURL: `${BASE_URL}/api`,
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
 });
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
+<<<<<<< HEAD
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -15,3 +23,13 @@ api.interceptors.request.use((config) => {
 });
 
 export default api;
+=======
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+export default api;
+export const UPLOADS_URL = `${BASE_URL}/uploads`;
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50

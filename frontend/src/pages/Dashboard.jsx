@@ -3,8 +3,15 @@
 // LOGIC: UNCHANGED. Only UI redesigned.
 
 import { useEffect, useState } from "react";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
 import axios from "axios";
+=======
+import api from "../services/api";
+import { UPLOADS_URL } from "../services/api";
+import { Link } from "react-router-dom";
+
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
 
 function getUser() {
   try { const u = localStorage.getItem("admin_user"); return u ? JSON.parse(u) : null; }
@@ -24,7 +31,11 @@ const apptCfg = {
 };
 
 const PAGE_SIZE = 5;
+<<<<<<< HEAD
 const BASE_URL  = "http://localhost:5000/uploads/";
+=======
+
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
 
 function isVideo(filename) {
   return /\.(mp4|webm|ogg|mov)$/i.test(filename);
@@ -65,13 +76,21 @@ function Lightbox({ file, onClose }) {
       <div onClick={e => e.stopPropagation()} style={{ maxWidth:"90vw", maxHeight:"90vh" }}>
         {isVideo(file) ? (
           <video
+<<<<<<< HEAD
             src={BASE_URL + file}
+=======
+            src={UPLOADS_URL + "/" + file}
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
             controls autoPlay
             style={{ maxWidth:"90vw", maxHeight:"88vh", borderRadius:12, boxShadow:"0 24px 80px rgba(0,0,0,0.6)" }}
           />
         ) : (
           <img
+<<<<<<< HEAD
             src={BASE_URL + file}
+=======
+            src={UPLOADS_URL + "/" + file}
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
             alt=""
             style={{ maxWidth:"90vw", maxHeight:"88vh", borderRadius:12, objectFit:"contain", boxShadow:"0 24px 80px rgba(0,0,0,0.6)" }}
           />
@@ -206,7 +225,11 @@ function NoticesBoard({ notices }) {
                               >
                                 {isVideo(file) ? (
                                   <>
+<<<<<<< HEAD
                                     <video src={BASE_URL + file} style={{ width:"100%", height:"100%", objectFit:"cover" }} muted />
+=======
+                                    <video src={UPLOADS_URL + "/" + file} style={{ width:"100%", height:"100%", objectFit:"cover" }} muted />
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
                                     {/* Play overlay */}
                                     <div style={{ position:"absolute", inset:0, display:"flex", alignItems:"center", justifyContent:"center", background:"rgba(0,0,0,0.30)" }}>
                                       <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -214,7 +237,11 @@ function NoticesBoard({ notices }) {
                                   </>
                                 ) : (
                                   <>
+<<<<<<< HEAD
                                     <img src={BASE_URL + file} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />
+=======
+                                    <img src={UPLOADS_URL + "/" + file} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
                                     {/* Zoom overlay */}
                                     <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,0)", display:"flex", alignItems:"center", justifyContent:"center", transition:"background 0.16s" }}
                                       onMouseEnter={e => e.currentTarget.style.background="rgba(0,0,0,0.28)"}
@@ -315,10 +342,17 @@ export default function Dashboard() {
   useEffect(() => {
     let cancelled = false;
     Promise.all([
+<<<<<<< HEAD
       axios.get("http://localhost:5000/api/notices"),
       axios.get("http://localhost:5000/api/complaints"),
       axios.get("http://localhost:5000/api/appointments"),
       axios.get("http://localhost:5000/api/stats"),
+=======
+      api.get("/notices"),
+      api.get("/complaints"),
+      api.get("/appointments"),
+      api.get("/stats"),
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
     ]).then(([n, c, a, s]) => {
       if (cancelled) return;
       setNotices(n.data);
@@ -552,4 +586,8 @@ export default function Dashboard() {
       `}</style>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50

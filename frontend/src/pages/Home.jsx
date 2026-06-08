@@ -3,8 +3,14 @@
 // Application Home Page — App-style landing, not a public website
 
 import { useEffect, useState } from "react";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
 import axios from "axios";
+=======
+import api from "../services/api";
+import { Link } from "react-router-dom";
+
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
 
 /* ─── Design Tokens ─────────────────────────────────────────── */
 const C = {
@@ -101,11 +107,19 @@ export default function Homepage() {
 
   useEffect(() => {
     let cancelled = false;
+<<<<<<< HEAD
     axios.get("http://localhost:5000/api/complaints/public")
       .then(res => { if (!cancelled) setComplaints(res.data); })
       .catch(() => {})
       .finally(() => { if (!cancelled) setLoading(false); });
     axios.get("http://localhost:5000/api/stats")
+=======
+    api.get("/complaints/public")
+      .then(res => { if (!cancelled) setComplaints(res.data); })
+      .catch(() => {})
+      .finally(() => { if (!cancelled) setLoading(false); });
+    api.get("/stats")
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
       .then(res => { if (!cancelled) setStats(res.data); })
       .catch(() => {});
     return () => { cancelled = true; };
@@ -659,4 +673,8 @@ export default function Homepage() {
       </footer>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50

@@ -4,7 +4,11 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import axios from "axios";
+=======
+import api from "../services/api";
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
 
 const C = {
   navy:"#0D1B3E", saffron:"#FF6B00", gold:"#C8942A", goldLight:"#E8B84B",
@@ -66,7 +70,11 @@ export default function PublicAppointmentForm() {
     if (Object.keys(e).length) { setErrors(e); return; }
     setErrors({}); setLoading(true);
     try {
+<<<<<<< HEAD
       await axios.post("http://localhost:5000/api/appointments", form);
+=======
+      await api.post("/appointments", form);
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
       setBooked({ name:form.full_name, date:form.date, time:form.time });
       setSuccess(true); setForm(EMPTY);
       window.scrollTo({ top:0, behavior:"smooth" });
@@ -319,4 +327,8 @@ export default function PublicAppointmentForm() {
       </footer>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50

@@ -3,7 +3,12 @@
 // LOGIC: UNCHANGED. Only UI redesigned.
 
 import { useEffect, useState } from "react";
+<<<<<<< HEAD
 import axios from "axios";
+=======
+import api from "../services/api";
+
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
 
 function getUser() {
   try { const u = localStorage.getItem("admin_user"); return u ? JSON.parse(u) : null; }
@@ -31,7 +36,11 @@ export default function Complaints() {
 
   useEffect(() => {
     let cancelled = false;
+<<<<<<< HEAD
     axios.get("http://localhost:5000/api/complaints")
+=======
+    api.get("/complaints")
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
       .then(res => { if (!cancelled) setComplaints(res.data); })
       .catch(() => {})
       .finally(() => { if (!cancelled) setLoading(false); });
@@ -41,7 +50,11 @@ export default function Complaints() {
   const changeStatus = async (id, newStatus) => {
     setStatusBusy(prev => ({ ...prev, [id]: true }));
     try {
+<<<<<<< HEAD
       await axios.patch(`http://localhost:5000/api/complaints/${id}/status`, { status: newStatus });
+=======
+      await api.patch(`/complaints/${id}/status`, { status: newStatus });
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
       setComplaints(prev => prev.map(c => c.id === id ? { ...c, status: newStatus } : c));
     } catch { alert("Failed to update status."); }
     finally { setStatusBusy(prev => ({ ...prev, [id]: false })); }
@@ -250,4 +263,8 @@ export default function Complaints() {
       `}</style>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50

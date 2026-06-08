@@ -1,9 +1,29 @@
+<<<<<<< HEAD
 const tenantFilter = (req, res, next) => {
   req.tenant_id = req.user.tenant_id;
+=======
+HEAD
+// backend/tenant.js
+// Tenant middleware (kept for compatibility, not used in current routes)
+
+const tenantFilter = (req, res, next) => {
+  if (req.user && req.user.tenant_id) {
+    req.tenant_id = req.user.tenant_id;
+  }
+=======
+const tenantFilter = (req, res, next) => {
+  req.tenant_id = req.user.tenant_id;
+>>>>>>> 3d0f566a6d5550f072f47006d0b50a06afea0d21
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
   next();
 };
 
 module.exports = { tenantFilter };
+<<<<<<< HEAD
+=======
+HEAD
+=======
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
 
 
 
@@ -100,4 +120,9 @@ app.get("/stats", getStats);
 
 app.listen(5000, () => console.log("🚀 SaaS Running"));
 
+<<<<<<< HEAD
     
+=======
+    
+>>>>>>> 3d0f566a6d5550f072f47006d0b50a06afea0d21
+>>>>>>> 4e07937c357e004173dd628fbba3257e2aafaa50
